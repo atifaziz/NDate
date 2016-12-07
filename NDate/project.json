@@ -15,10 +15,6 @@
     }
   },
 
-  "dependencies": {
-    "NETStandard.Library": "1.6.0"
-  },
-
   "frameworks": {
     "net20": {
       "buildOptions": {
@@ -28,6 +24,9 @@
       }
     },
     "netstandard1.0": {
+      "dependencies": {
+        "System.Net.Primitives": "4.0.11"
+      },
       "buildOptions": {
         "compile": {
           "excludeFiles": [
@@ -36,6 +35,10 @@
         }
       }
     },
-    "netstandard1.3": {}
+    "netstandard1.3": {
+      "dependencies": {
+        "System.Net.Primitives": "4.0.11"
+      }
+    }
   }
 }
