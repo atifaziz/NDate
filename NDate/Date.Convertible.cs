@@ -21,14 +21,14 @@ namespace NDate
     // ReSharper disable once PartialTypeWithSinglePart
     partial struct Date : IConvertible
     {
-        TypeCode IConvertible.GetTypeCode() { return TypeCode.Object; }
+        TypeCode IConvertible.GetTypeCode() => TypeCode.Object;
 
-        DateTime IConvertible.ToDateTime(IFormatProvider provider) { return ToDateTime(); }
+        DateTime IConvertible.ToDateTime(IFormatProvider provider) => ToDateTime();
 
         object IConvertible.ToType(Type conversionType, IFormatProvider provider)
         {
-            var result =
-                conversionType == typeof(string) ? ToString(provider)
+            var result
+                = conversionType == typeof(string) ? ToString(provider)
                 : conversionType == typeof(DateTime) ? ToDateTime()
                 : conversionType == typeof(DateTimeOffset) ? ToDateTimeOffset()
                 : (object)null;
@@ -39,7 +39,7 @@ namespace NDate
             return result;
         }
 
-        static InvalidCastException InvalidCastError(Type targetType) { throw new InvalidCastException(string.Format("Invalid case from '{0}' to '{1}'.", ThisTypeName, targetType.Name)); }
+        static InvalidCastException InvalidCastError(Type targetType) { throw new InvalidCastException($"Invalid case from '{nameof(Date)}' to '{targetType.Name}'."); }
 
         bool     IConvertible.ToBoolean(IFormatProvider provider)  { throw InvalidCastError(typeof(bool));    }
         char     IConvertible.ToChar(IFormatProvider provider)     { throw InvalidCastError(typeof(char));    }

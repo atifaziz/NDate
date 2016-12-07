@@ -30,7 +30,6 @@ namespace NDate
     partial struct Date :
         IEquatable<Date>, IComparable, IComparable<Date>, IFormattable
     {
-        static readonly string ThisTypeName = typeof(Date).Name;
         static readonly DateTime Epoch = DateTime.MinValue;
         const int MaxDays = 3652058;
 
@@ -46,61 +45,59 @@ namespace NDate
             _days = days;
         }
 
-        public static Date Today { get { return new Date(DateTime.Today); } }
+        public static Date Today => new Date(DateTime.Today);
 
-        public DateTime ToDateTime() { return Epoch.AddDays(_days); }
-        public DateTime ToDateTime(TimeSpan time) { return ToDateTime(time, DateTimeKind.Unspecified); }
-        public DateTime ToDateTime(TimeSpan time, DateTimeKind kind) { return DateTime.SpecifyKind(ToDateTime() + time, kind); }
+        public DateTime ToDateTime() => Epoch.AddDays(_days);
+        public DateTime ToDateTime(TimeSpan time) => ToDateTime(time, DateTimeKind.Unspecified);
+        public DateTime ToDateTime(TimeSpan time, DateTimeKind kind) => DateTime.SpecifyKind(ToDateTime() + time, kind);
 
-        public DateTimeOffset ToDateTimeOffset() { return new DateTimeOffset(ToDateTime()); }
-        public DateTimeOffset ToDateTimeOffset(TimeSpan time) { return new DateTimeOffset(ToDateTime(time)); }
-        public DateTimeOffset ToDateTimeOffset(TimeSpan time, TimeSpan offset) { return new DateTimeOffset(ToDateTime(time), offset); }
+        public DateTimeOffset ToDateTimeOffset() => new DateTimeOffset(ToDateTime());
+        public DateTimeOffset ToDateTimeOffset(TimeSpan time) => new DateTimeOffset(ToDateTime(time));
+        public DateTimeOffset ToDateTimeOffset(TimeSpan time, TimeSpan offset) => new DateTimeOffset(ToDateTime(time), offset);
 
-        public int       Day       { get { return ToDateTime().Day;         } }
-        public int       Month     { get { return ToDateTime().Month;       } }
-        public int       Year      { get { return ToDateTime().Year;        } }
-        public int       DayOfYear { get { return ToDateTime().DayOfYear;   } }
-        public DayOfWeek DayOfWeek { get { return ToDateTime().DayOfWeek;   } }
+        public int       Day       => ToDateTime().Day;
+        public int       Month     => ToDateTime().Month;
+        public int       Year      => ToDateTime().Year;
+        public int       DayOfYear => ToDateTime().DayOfYear;
+        public DayOfWeek DayOfWeek => ToDateTime().DayOfWeek;
 
-        public override int GetHashCode() { return _days; }
-        public override bool Equals(object obj) { return obj is Date && Equals((Date) obj); }
-        public bool Equals(Date other) { return _days == other._days; }
+        public override int GetHashCode() => _days;
+        public override bool Equals(object obj) => obj is Date && Equals((Date) obj);
+        public bool Equals(Date other) => _days == other._days;
 
-        public override string ToString() { return ToString((string) null); }
-        public string ToString(IFormatProvider formatProvider) { return ToString(null, formatProvider); }
-        public string ToString(string format) { return ToString(format, null); }
-        public string ToString(string format, IFormatProvider formatProvider)
-        {
-            return string.IsNullOrEmpty(format)
-                || (format.Length == 1 && (format[0] == 'g' || format[0] == 'G'))
-                ? ToDateTime().ToString("d")
-                : ToDateTime().ToString(format, formatProvider);
-        }
+        public override string ToString() => ToString((string) null);
+        public string ToString(IFormatProvider formatProvider) => ToString(null, formatProvider);
+        public string ToString(string format) => ToString(format, null);
+        public string ToString(string format, IFormatProvider formatProvider) =>
+            string.IsNullOrEmpty(format)
+            || (format.Length == 1 && (format[0] == 'g' || format[0] == 'G'))
+            ? ToDateTime().ToString("d")
+            : ToDateTime().ToString(format, formatProvider);
 
         public int CompareTo(object obj)
         {
-            if (!(obj is Date)) throw new ArgumentException(string.Format("Object must be of type {0}.", ThisTypeName), "obj");
+            if (!(obj is Date)) throw new ArgumentException($"Object must be of type {nameof(Date)}.", nameof(obj));
             return CompareTo((Date) obj);
         }
 
-        public int CompareTo(Date other) { return _days.CompareTo(other._days); }
+        public int CompareTo(Date other) => _days.CompareTo(other._days);
 
-        public static bool operator ==(Date a, Date b) { return a.Equals(b); }
-        public static bool operator !=(Date a, Date b) { return !(a == b); }
-        public static bool operator < (Date a, Date b) { return a.CompareTo(b) <  0; }
-        public static bool operator <=(Date a, Date b) { return a.CompareTo(b) <= 0; }
-        public static bool operator > (Date a, Date b) { return a.CompareTo(b) >  0; }
-        public static bool operator >=(Date a, Date b) { return a.CompareTo(b) >= 0; }
+        public static bool operator ==(Date a, Date b) => a.Equals(b);
+        public static bool operator !=(Date a, Date b) => !(a == b);
+        public static bool operator < (Date a, Date b) => a.CompareTo(b) <  0;
+        public static bool operator <=(Date a, Date b) => a.CompareTo(b) <= 0;
+        public static bool operator > (Date a, Date b) => a.CompareTo(b) >  0;
+        public static bool operator >=(Date a, Date b) => a.CompareTo(b) >= 0;
 
-        public static Date operator +(Date date, int days) { return new Date(date._days + days); }
-        public static Date operator -(Date date, int days) { return date + -days; }
-        public static int  operator -(Date a, Date b) { return a._days - b._days; }
+        public static Date operator +(Date date, int days) => new Date(date._days + days);
+        public static Date operator -(Date date, int days) => date + -days;
+        public static int  operator -(Date a, Date b) => a._days - b._days;
 
-        public static explicit operator Date(DateTime value) { return new Date(value); }
-        public static implicit operator DateTime(Date value) { return value.ToDateTime(); }
+        public static explicit operator Date(DateTime value) => new Date(value);
+        public static implicit operator DateTime(Date value) => value.ToDateTime();
 
-        public Date AddDays(int days)     { return new Date(_days + days);                   }
-        public Date AddMonths(int months) { return new Date(ToDateTime().AddMonths(months)); }
-        public Date AddYears(int years)   { return new Date(ToDateTime().AddYears(years));   }
+        public Date AddDays(int days)     => new Date(_days + days);
+        public Date AddMonths(int months) => new Date(ToDateTime().AddMonths(months));
+        public Date AddYears(int years)   => new Date(ToDateTime().AddYears(years));
     }
 }
