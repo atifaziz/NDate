@@ -28,7 +28,7 @@ namespace NDate
     #endif
     // ReSharper disable once PartialTypeWithSinglePart
     partial struct Date :
-        IEquatable<Date>, IComparable, IComparable<Date>, IFormattable, IConvertible
+        IEquatable<Date>, IComparable, IComparable<Date>, IFormattable
     {
         static readonly string ThisTypeName = typeof(Date).Name;
         static readonly DateTime Epoch = DateTime.MinValue;
@@ -102,39 +102,5 @@ namespace NDate
         public Date AddDays(int days)     { return new Date(_days + days);                   }
         public Date AddMonths(int months) { return new Date(ToDateTime().AddMonths(months)); }
         public Date AddYears(int years)   { return new Date(ToDateTime().AddYears(years));   }
-
-        TypeCode IConvertible.GetTypeCode() { return TypeCode.Object; }
-
-        DateTime IConvertible.ToDateTime(IFormatProvider provider) { return ToDateTime(); }
-
-        object IConvertible.ToType(Type conversionType, IFormatProvider provider)
-        {
-            var result =
-                conversionType == typeof(string) ? ToString(provider)
-                : conversionType == typeof(DateTime) ? ToDateTime()
-                : conversionType == typeof(DateTimeOffset) ? ToDateTimeOffset()
-                : (object)null;
-
-            if (result == null)
-                throw InvalidCastError(conversionType);
-
-            return result;
-        }
-
-        static InvalidCastException InvalidCastError(Type targetType) { throw new InvalidCastException(string.Format("Invalid case from '{0}' to '{1}'.", ThisTypeName, targetType.Name)); }
-
-        bool     IConvertible.ToBoolean(IFormatProvider provider)  { throw InvalidCastError(typeof(bool));    }
-        char     IConvertible.ToChar(IFormatProvider provider)     { throw InvalidCastError(typeof(char));    }
-        sbyte    IConvertible.ToSByte(IFormatProvider provider)    { throw InvalidCastError(typeof(sbyte));   }
-        byte     IConvertible.ToByte(IFormatProvider provider)     { throw InvalidCastError(typeof(byte));    }
-        short    IConvertible.ToInt16(IFormatProvider provider)    { throw InvalidCastError(typeof(short));   }
-        ushort   IConvertible.ToUInt16(IFormatProvider provider)   { throw InvalidCastError(typeof(ushort));  }
-        int      IConvertible.ToInt32(IFormatProvider provider)    { throw InvalidCastError(typeof(int));     }
-        uint     IConvertible.ToUInt32(IFormatProvider provider)   { throw InvalidCastError(typeof(uint));    }
-        long     IConvertible.ToInt64(IFormatProvider provider)    { throw InvalidCastError(typeof(long));    }
-        ulong    IConvertible.ToUInt64(IFormatProvider provider)   { throw InvalidCastError(typeof(ulong));   }
-        float    IConvertible.ToSingle(IFormatProvider provider)   { throw InvalidCastError(typeof(float));   }
-        double   IConvertible.ToDouble(IFormatProvider provider)   { throw InvalidCastError(typeof(double));  }
-        decimal  IConvertible.ToDecimal(IFormatProvider provider)  { throw InvalidCastError(typeof(decimal)); }
     }
 }

@@ -13,7 +13,15 @@
         ]
       }
     },
-    "netstandard1.6": {
-    }
+    "netstandard1.0": {
+      "buildOptions": {
+        "compile": {
+          "excludeFiles": [
+            "Date.Convertible.cs"
+          ]
+        }
+      }
+    },
+    "netstandard1.3": {}
   }
 }
