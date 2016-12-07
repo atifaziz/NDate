@@ -33,6 +33,9 @@ namespace NDate
         static readonly DateTime Epoch = DateTime.MinValue;
         const int MaxDays = 3652058;
 
+        public static readonly Date MinValue = new Date();
+        public static readonly Date MaxValue = new Date(MaxDays);
+
         readonly int _days;
 
         public Date(DateTime date) : this((int)(date - Epoch).TotalDays) { }
