@@ -11,6 +11,8 @@ build_script:
     $id = $id.Substring(0, 13)
 
     .\pack.cmd $id
+test_script:
+- cmd: dotnet test NDate.Tests
 artifacts:
 - path: NDate\bin\Release\*.nupkg
 deploy:
