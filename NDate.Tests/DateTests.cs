@@ -78,7 +78,10 @@ namespace NDate.Tests
             Assert.Equal(DateTime.MaxValue.Day  , date.Day);
         }
 
-        static readonly Date TestDate = new Date(1995, 8, 15);
+        const int TestYear = 1995;
+        const int TestMonth = 8;
+        const int TestDay = 15;
+        static readonly Date TestDate = new Date(TestYear, TestMonth, TestDay);
 
         [Fact]
         public void EqualsReturnsTrueForSameDates()
@@ -171,6 +174,42 @@ namespace NDate.Tests
             Assert.Equal(year, date.Year);
             Assert.Equal(month, date.Month);
             Assert.Equal(1, date.Day);
+        }
+
+        [Theory]
+        [InlineData(true,  TestYear + 0, TestMonth + 0, TestDay + 0, TestYear + 0, TestMonth + 0, TestDay + 0)]
+        [InlineData(true,  TestYear + 0, TestMonth + 0, TestDay - 1, TestYear + 0, TestMonth + 0, TestDay + 0)]
+        [InlineData(true,  TestYear + 0, TestMonth + 0, TestDay + 0, TestYear + 0, TestMonth + 0, TestDay + 1)]
+        [InlineData(false, TestYear + 0, TestMonth + 0, TestDay + 1, TestYear + 0, TestMonth + 0, TestDay + 1)]
+        [InlineData(true,  TestYear + 0, TestMonth - 1, TestDay + 0, TestYear + 0, TestMonth + 0, TestDay + 0)]
+        [InlineData(true,  TestYear + 0, TestMonth + 0, TestDay + 0, TestYear + 0, TestMonth + 1, TestDay + 0)]
+        [InlineData(false, TestYear + 0, TestMonth + 1, TestDay + 0, TestYear + 0, TestMonth + 1, TestDay + 0)]
+        [InlineData(true,  TestYear - 1, TestMonth + 0, TestDay + 0, TestYear + 0, TestMonth + 0, TestDay + 0)]
+        [InlineData(true,  TestYear + 0, TestMonth + 0, TestDay + 0, TestYear + 0, TestMonth + 0, TestDay + 1)]
+        [InlineData(false, TestYear + 1, TestMonth + 0, TestDay + 0, TestYear + 0, TestMonth + 0, TestDay + 1)]
+        public void IsInRange(bool expected, int y1, int m1, int d1, int y2, int m2, int d2)
+        {
+            var first = new Date(y1, m1, d1);
+            var last = new Date(y2, m2, d2);
+            Assert.Equal(expected, TestDate.IsInRange(first, last));
+        }
+
+        [Theory]
+        [InlineData(false, TestYear + 0, TestMonth + 0, TestDay + 0, TestYear + 0, TestMonth + 0, TestDay + 0)]
+        [InlineData(false, TestYear + 0, TestMonth + 0, TestDay - 1, TestYear + 0, TestMonth + 0, TestDay + 0)]
+        [InlineData(true,  TestYear + 0, TestMonth + 0, TestDay + 0, TestYear + 0, TestMonth + 0, TestDay + 1)]
+        [InlineData(false, TestYear + 0, TestMonth + 0, TestDay + 1, TestYear + 0, TestMonth + 0, TestDay + 1)]
+        [InlineData(false, TestYear + 0, TestMonth - 1, TestDay + 0, TestYear + 0, TestMonth + 0, TestDay + 0)]
+        [InlineData(true,  TestYear + 0, TestMonth + 0, TestDay + 0, TestYear + 0, TestMonth + 1, TestDay + 0)]
+        [InlineData(false, TestYear + 0, TestMonth + 1, TestDay + 0, TestYear + 0, TestMonth + 1, TestDay + 0)]
+        [InlineData(false, TestYear - 1, TestMonth + 0, TestDay + 0, TestYear + 0, TestMonth + 0, TestDay + 0)]
+        [InlineData(true,  TestYear + 0, TestMonth + 0, TestDay + 0, TestYear + 0, TestMonth + 0, TestDay + 1)]
+        [InlineData(false, TestYear + 1, TestMonth + 0, TestDay + 0, TestYear + 0, TestMonth + 0, TestDay + 1)]
+        public void IsBetween(bool expected, int y1, int m1, int d1, int y2, int m2, int d2)
+        {
+            var first = new Date(y1, m1, d1);
+            var end = new Date(y2, m2, d2);
+            Assert.Equal(expected, TestDate.IsBetween(first, end));
         }
     }
 }

@@ -105,6 +105,9 @@ namespace NDate
 
         public static Date EndOfMonth(int year, int month) =>
             new Date(year, month, DateTime.DaysInMonth(year, month));
+
+        public bool IsInRange(Date first, Date last) => this >= first && this <= last;
+        public bool IsBetween(Date first, Date end ) => this >= first && this < end;
     }
 
     #if NDATE_CONVERTIBLE
