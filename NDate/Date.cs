@@ -17,6 +17,9 @@
 namespace NDate
 {
     using System;
+    #if NDATE_CONTRACTS
+    using System.Diagnostics.Contracts;
+    #endif
 
     /// <summary>
     /// Represents a single date without any time component or regard for
@@ -106,8 +109,15 @@ namespace NDate
         public static Date EndOfMonth(int year, int month) =>
             new Date(year, month, DateTime.DaysInMonth(year, month));
 
+        #if NDATE_CONTRACTS
+        [Pure]
+        #endif
         public bool IsInRange(Date first, Date last) => this >= first && this <= last;
-        public bool IsBetween(Date first, Date end ) => this >= first && this < end;
+
+        #if NDATE_CONTRACTS
+        [Pure]
+        #endif
+        public bool IsBetween(Date first, Date end) => this >= first && this < end;
     }
 
     #if NDATE_CONVERTIBLE
