@@ -96,6 +96,8 @@ namespace NDate
         public static Date operator -(Date date, int days) => date + -days;
         public static int  operator -(Date a, Date b) => a._days - b._days;
 
+        public static DateTime operator +(Date date, TimeSpan time) => date.ToDateTime(time);
+
         public static explicit operator Date(DateTime value) => new Date(value);
         public static implicit operator DateTime(Date value) => value.ToDateTime();
 

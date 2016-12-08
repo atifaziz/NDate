@@ -18,6 +18,7 @@ namespace NDate.Tests
 {
     using System;
     using System.Collections.Generic;
+    using System.Globalization;
     using Xunit;
 
     public class DateTests
@@ -227,6 +228,16 @@ namespace NDate.Tests
             var first = new Date(y1, m1, d1);
             var end = new Date(y2, m2, d2);
             Assert.Equal(expected, TestDate.IsBetween(first, end));
+        }
+
+        [Theory]
+        [InlineData("1995-08-15 12:30:00", 12.5)]
+        [InlineData("1995-08-16 00:00:00", 24.0)]
+        [InlineData("1995-08-16 01:00:00", 25.0)]
+        public void AddTimeSpan(string expected, double hours)
+        {
+            var dt = TestDate + TimeSpan.FromHours(hours);
+            Assert.Equal(expected, dt.ToString("yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture));
         }
     }
 }
