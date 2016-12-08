@@ -15,31 +15,37 @@ namespace NDate.Tests
             Assert.Equal(1, date.Day);
         }
 
+        const int TestYear = 1995;
+        const int TestMonth = 8;
+        const int TestDay = 15;
+        static readonly Date TestDate = new Date(TestYear, TestMonth, TestDay);
+
         [Fact]
         public void DateIsInitialized()
         {
-            var date = new Date(1995, 8, 15);
-            Assert.Equal(1995, date.Year);
-            Assert.Equal(8, date.Month);
-            Assert.Equal(15, date.Day);
+            var date = new Date(TestYear, TestMonth, TestDay);
+            Assert.Equal(TestYear, date.Year);
+            Assert.Equal(TestMonth, date.Month);
+            Assert.Equal(TestDay, date.Day);
         }
 
         [Fact]
         public void DateIsInitializedWithDate()
         {
-            var date = new Date(new Date(1995, 8, 15));
-            Assert.Equal(1995, date.Year);
-            Assert.Equal(8, date.Month);
-            Assert.Equal(15, date.Day);
+            var date = new Date(TestDate);
+            Assert.Equal(TestDate.Year, date.Year);
+            Assert.Equal(TestDate.Month, date.Month);
+            Assert.Equal(TestDate.Day, date.Day);
         }
 
         [Fact]
         public void DateIsInitializedWithDateTime()
         {
-            var date = new Date(new DateTime(1995, 8, 15));
-            Assert.Equal(1995, date.Year);
-            Assert.Equal(8, date.Month);
-            Assert.Equal(15, date.Day);
+            var dt = new DateTime(TestYear, TestMonth, TestDay);
+            var date = new Date(dt);
+            Assert.Equal(dt.Year, date.Year);
+            Assert.Equal(dt.Month, date.Month);
+            Assert.Equal(dt.Day, date.Day);
         }
 
         [Fact]
@@ -77,11 +83,6 @@ namespace NDate.Tests
             Assert.Equal(DateTime.MaxValue.Month, date.Month);
             Assert.Equal(DateTime.MaxValue.Day  , date.Day);
         }
-
-        const int TestYear = 1995;
-        const int TestMonth = 8;
-        const int TestDay = 15;
-        static readonly Date TestDate = new Date(TestYear, TestMonth, TestDay);
 
         [Fact]
         public void EqualsReturnsTrueForSameDates()
