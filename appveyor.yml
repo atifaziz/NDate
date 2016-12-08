@@ -12,7 +12,7 @@ build_script:
 
     .\pack.cmd $id
 test_script:
-- cmd: dotnet test NDate.Tests
+- cmd: .\test.cmd
 artifacts:
 - path: NDate\bin\Release\*.nupkg
 deploy:
