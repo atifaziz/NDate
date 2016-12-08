@@ -129,5 +129,48 @@ namespace NDate.Tests
         {
             Assert.False(TestDate != new Date(TestDate));
         }
+
+        [Theory]
+        [InlineData(2000, 01, 31)]
+        [InlineData(2000, 02, 29)]
+        [InlineData(2001, 02, 28)]
+        [InlineData(2000, 03, 31)]
+        [InlineData(2000, 04, 30)]
+        [InlineData(2000, 05, 31)]
+        [InlineData(2000, 06, 30)]
+        [InlineData(2000, 07, 31)]
+        [InlineData(2000, 08, 31)]
+        [InlineData(2000, 09, 30)]
+        [InlineData(2000, 10, 31)]
+        [InlineData(2000, 11, 30)]
+        [InlineData(2000, 12, 31)]
+        public void EndOfMonth(int year, int month, int day)
+        {
+            var date = Date.EndOfMonth(year, month);
+            Assert.Equal(year, date.Year);
+            Assert.Equal(month, date.Month);
+            Assert.Equal(day, date.Day);
+        }
+
+        [Theory]
+        [InlineData(2000, 01)]
+        [InlineData(2000, 02)]
+        [InlineData(2000, 03)]
+        [InlineData(2000, 04)]
+        [InlineData(2000, 05)]
+        [InlineData(2000, 06)]
+        [InlineData(2000, 07)]
+        [InlineData(2000, 08)]
+        [InlineData(2000, 09)]
+        [InlineData(2000, 10)]
+        [InlineData(2000, 11)]
+        [InlineData(2000, 12)]
+        public void EndOfMonth(int year, int month)
+        {
+            var date = Date.FirstOfMonth(year, month);
+            Assert.Equal(year, date.Year);
+            Assert.Equal(month, date.Month);
+            Assert.Equal(1, date.Day);
+        }
     }
 }

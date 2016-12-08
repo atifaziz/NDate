@@ -99,6 +99,12 @@ namespace NDate
         public Date AddDays(int days)     => new Date(_days + days);
         public Date AddMonths(int months) => new Date(ToDateTime().AddMonths(months));
         public Date AddYears(int years)   => new Date(ToDateTime().AddYears(years));
+
+        public static Date FirstOfMonth(int year, int month) =>
+            new Date(year, month, 1);
+
+        public static Date EndOfMonth(int year, int month) =>
+            new Date(year, month, DateTime.DaysInMonth(year, month));
     }
 
     #if NDATE_CONVERTIBLE
