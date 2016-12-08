@@ -1,5 +1,5 @@
-﻿{
-  "version": "1.0.0-beta-*",
+{
+  "version": "1.0.0-*",
   "title": "Date Type for .NET",
   "description": ".NET Standard library that provides a Date value type for times when you need to strictly represent a date without any time component.",
   "authors": [ "Atif Aziz" ],
