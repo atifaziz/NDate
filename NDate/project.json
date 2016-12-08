@@ -16,32 +16,34 @@
   },
 
   "buildOptions": {
-    "debugType": "portable"
+    "debugType": "portable",
+    "define": [
+      "NDATE_PUBLIC"
+    ]
   },
 
   "frameworks": {
     "net20": {
       "buildOptions": {
         "define": [
-          "SERIALIZABLE"
+          "NDATE_SERIALIZABLE",
+          "NDATE_CONVERTIBLE"
         ]
       }
     },
     "netstandard1.0": {
       "dependencies": {
         "System.Net.Primitives": "4.0.11"
-      },
-      "buildOptions": {
-        "compile": {
-          "excludeFiles": [
-            "Date.Convertible.cs"
-          ]
-        }
       }
     },
     "netstandard1.3": {
       "dependencies": {
         "System.Net.Primitives": "4.0.11"
+      },
+      "buildOptions": {
+        "define": [
+          "NDATE_CONVERTIBLE"
+        ]
       }
     }
   }

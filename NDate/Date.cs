@@ -23,9 +23,6 @@ namespace NDate
     /// any time zone.
     /// </summary>
 
-    #if SERIALIZABLE
-    [Serializable]
-    #endif
     // ReSharper disable once PartialTypeWithSinglePart
     partial struct Date :
         IEquatable<Date>, IComparable, IComparable<Date>, IFormattable
@@ -103,4 +100,53 @@ namespace NDate
         public Date AddMonths(int months) => new Date(ToDateTime().AddMonths(months));
         public Date AddYears(int years)   => new Date(ToDateTime().AddYears(years));
     }
+
+    #if NDATE_CONVERTIBLE
+
+    partial struct Date : IConvertible
+    {
+        TypeCode IConvertible.GetTypeCode() => TypeCode.Object;
+
+        DateTime IConvertible.ToDateTime(IFormatProvider provider) => ToDateTime();
+
+        object IConvertible.ToType(Type conversionType, IFormatProvider provider)
+        {
+            var result
+                = conversionType == typeof(string) ? ToString(provider)
+                : conversionType == typeof(DateTime) ? ToDateTime()
+                : conversionType == typeof(DateTimeOffset) ? ToDateTimeOffset()
+                : (object)null;
+
+            if (result == null)
+                throw InvalidCastError(conversionType);
+
+            return result;
+        }
+
+        static InvalidCastException InvalidCastError(Type targetType) { throw new InvalidCastException($"Invalid case from '{nameof(Date)}' to '{targetType.Name}'."); }
+
+        bool     IConvertible.ToBoolean(IFormatProvider provider)  { throw InvalidCastError(typeof(bool));    }
+        char     IConvertible.ToChar(IFormatProvider provider)     { throw InvalidCastError(typeof(char));    }
+        sbyte    IConvertible.ToSByte(IFormatProvider provider)    { throw InvalidCastError(typeof(sbyte));   }
+        byte     IConvertible.ToByte(IFormatProvider provider)     { throw InvalidCastError(typeof(byte));    }
+        short    IConvertible.ToInt16(IFormatProvider provider)    { throw InvalidCastError(typeof(short));   }
+        ushort   IConvertible.ToUInt16(IFormatProvider provider)   { throw InvalidCastError(typeof(ushort));  }
+        int      IConvertible.ToInt32(IFormatProvider provider)    { throw InvalidCastError(typeof(int));     }
+        uint     IConvertible.ToUInt32(IFormatProvider provider)   { throw InvalidCastError(typeof(uint));    }
+        long     IConvertible.ToInt64(IFormatProvider provider)    { throw InvalidCastError(typeof(long));    }
+        ulong    IConvertible.ToUInt64(IFormatProvider provider)   { throw InvalidCastError(typeof(ulong));   }
+        float    IConvertible.ToSingle(IFormatProvider provider)   { throw InvalidCastError(typeof(float));   }
+        double   IConvertible.ToDouble(IFormatProvider provider)   { throw InvalidCastError(typeof(double));  }
+        decimal  IConvertible.ToDecimal(IFormatProvider provider)  { throw InvalidCastError(typeof(decimal)); }
+    }
+
+    #endif
+
+    #if NDATE_SERIALIZABLE
+    [Serializable] partial struct Date {}
+    #endif
+
+    #if NDATE_PUBLIC
+    public partial struct Date { }
+    #endif
 }
