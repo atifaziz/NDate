@@ -15,6 +15,10 @@
     }
   },
 
+  "buildOptions": {
+    "debugType": "portable"
+  },
+
   "frameworks": {
     "net20": {
       "buildOptions": {
