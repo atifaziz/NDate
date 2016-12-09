@@ -23,6 +23,19 @@ namespace NDate.Tests
 
     public class DateTests
     {
+        [Theory]
+        [InlineData(0000, 01, 01)]
+        [InlineData(2000, 00, 01)]
+        [InlineData(2000, 13, 01)]
+        [InlineData(2000, 01, 00)]
+        [InlineData(2000, 01, 32)]
+        [InlineData(2000, 02, 30)]
+        public void InvalidDateThrowsArgumentOutOfRangeException(int year, int month, int day)
+        {
+            var e = Assert.Throws<ArgumentOutOfRangeException>(() => new Date(year, month, day));
+            Assert.Null(e.ParamName);
+        }
+
         [Fact]
         public void DefaultValueIsJan01Y0001()
         {
