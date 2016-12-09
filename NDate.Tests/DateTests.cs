@@ -186,7 +186,7 @@ namespace NDate.Tests
         [InlineData(2000, 10)]
         [InlineData(2000, 11)]
         [InlineData(2000, 12)]
-        public void EndOfMonth(int year, int month)
+        public void FirstOfMonth(int year, int month)
         {
             var date = Date.FirstOfMonth(year, month);
             Assert.Equal(year, date.Year);
