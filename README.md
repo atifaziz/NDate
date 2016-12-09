@@ -11,69 +11,90 @@ component.
 ## Examples
 
 ```c#
+// Assume:
+// using static System.Console;
+// using System.Globalization;
+// using NDate;
+
+CultureInfo.CurrentCulture = new CultureInfo("en-GB");
+
 // Create a Date given a year, month and day
 
-var da = new Date(1995, 8, 15);
+var date = new Date(1995, 8, 15);
+WriteLine(date); // 15/08/1995
 
 // Create a Date from DateTime; the time component is lost
 
-var db = new Date(DateTime.Today);
+WriteLine(new Date(DateTime.Today)); // 09/12/2016
 
 // Get today's date
 
 var today = Date.Today;
+WriteLine(today);
 
 // Convert to DateTime
 
-var dta = Date.Today.ToDateTime();
-var dtb = Date.Today.ToDateTime(new TimeSpan(12, 34, 56));
-var dtc = Date.Today + new TimeSpan(12, 34, 56);
+var time = new TimeSpan(12, 34, 56);
+WriteLine(date.ToDateTime());        // 15/08/1995 00:00:00
+WriteLine(date.ToDateTime(time));    // 15/08/1995 12:34:56
+WriteLine(date + time);              // 15/08/1995 12:34:56
+
+// Implicit conversion to DateTime
+
+var tz = TimeZone.CurrentTimeZone;
+WriteLine(tz.GetUtcOffset(date)); // 02:00:00
 
 // Convert to DateTimeOffset
 
-var dtoa = Date.Today.ToDateTimeOffset();
-var dtob = Date.Today.ToDateTimeOffset(new TimeSpan(12, 34, 56));
-var dtoc = Date.Today.ToDateTimeOffset(new TimeSpan(12, 34, 56), new TimeSpan(1, 0, 0));
+WriteLine(date.ToDateTimeOffset());     // 15/08/1995 00:00:00 +02:00
+WriteLine(date.ToDateTimeOffset(time)); // 15/08/1995 12:34:56 +02:00
+
+var offset = new TimeSpan(1, 0, 0);
+WriteLine(date.ToDateTimeOffset(time, offset)); // 15/08/1995 12:34:56 +01:00
 
 // Get different parts of date
 
-var d = Date.Today.Day;
-var m = Date.Today.Month;
-var y = Date.Today.Year;
-var doy = Date.Today.DayOfYear;
-var dow = Date.Today.DayOfWeek;
+WriteLine(date.Day);        // 15
+WriteLine(date.Month);      // 8
+WriteLine(date.Year);       // 1995
+WriteLine(date.DayOfYear);  // 227
+WriteLine(date.DayOfWeek);  // Tuesday
 
 // Date math
 
 var tomorrow = Date.Today + 1;
-var yesterday = Date.Today - 1;
-var days = Date.Today - Date.MinValue;
-var dc = Date.Today.AddDays(10);
-var dd = Date.Today.AddMonths(6);
-var de = Date.Today.AddYears(2);
+WriteLine(tomorrow);             // 10/12/2016
 
+var yesterday = Date.Today - 1;  // 08/12/2016
+WriteLine(yesterday);
+
+WriteLine(date - Date.MinValue); // 728519
+WriteLine(date.AddDays(10));     // 25/08/1995
+WriteLine(date.AddMonths(6));    // 15/02/1996
+WriteLine(date.AddYears(2));     // 15/08/1997
 
 // Compare dates
 
-var same = Date.Today == Date.Today;
-var different = Date.Today != tomorrow;
-var smaller = Date.Today < tomorrow;
-var bigger = tomorrow > Date.Today;
+WriteLine(today == new Date(today));    // True; same
+WriteLine(today != tomorrow);           // True; different
+WriteLine(today < tomorrow);            // True; smaller
+WriteLine(tomorrow > Date.Today);       // True; bigger
 
 // Format
 
-var s1 = Date.Today.ToString("D");
-var s2 = Date.Today.ToString("yyyy-MM-dd");
+WriteLine(date.ToString("D"));          // 15 August 1995
+WriteLine(date.ToString("yyyyMMdd"));   // 19950815
+WriteLine(date.ToIso8601String());      // 1995-08-15
 
-// Others
+// Miscellaneous
 
-var fom = Date.FirstOfMonth(1995, 8); // Aug 01, 1995
-var eom = Date.EndOfMonth(1995, 8);   // Aug 31, 1995
+WriteLine(Date.FirstOfMonth(1995, 8));  // 01/08/1995
+WriteLine(Date.EndOfMonth(1995, 8));    // 31/08/1995
 
 // Range checking
 
-var yes = Date.Today.IsInRange(Date.Today, Date.Today); //
-var no  = Date.Today.IsBetween(Date.Today, Date.Today); // end is exclusive
+WriteLine(Date.Today.IsInRange(Date.Today, Date.Today)); // True
+WriteLine(Date.Today.IsBetween(Date.Today, Date.Today)); // False; end is exclusive
 ```
 
 
