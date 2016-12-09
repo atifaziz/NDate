@@ -239,5 +239,11 @@ namespace NDate.Tests
             var dt = TestDate + TimeSpan.FromHours(hours);
             Assert.Equal(expected, dt.ToString("yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture));
         }
+
+        [Fact] // ReSharper disable once InconsistentNaming
+        public void ToIso8601StringReturnsYYYYMMDD()
+        {
+            Assert.Equal("1995-08-15", TestDate.ToIso8601String());
+        }
     }
 }

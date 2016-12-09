@@ -43,6 +43,7 @@
     "netstandard1.0": {
       "dependencies": {
         "System.Diagnostics.Contracts": "4.0.1",
+        "System.Globalization": "4.0.11",
         "System.Net.Primitives": "4.0.11"
       },
       "buildOptions": {
@@ -54,6 +55,7 @@
     "netstandard1.3": {
       "dependencies": {
         "System.Diagnostics.Contracts": "4.0.1",
+        "System.Globalization": "4.0.11",
         "System.Net.Primitives": "4.0.11"
       },
       "buildOptions": {

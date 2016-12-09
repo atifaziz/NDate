@@ -17,6 +17,8 @@
 namespace NDate
 {
     using System;
+    using System.Globalization;
+
     #if NDATE_CONTRACTS
     using System.Diagnostics.Contracts;
     #endif
@@ -76,6 +78,11 @@ namespace NDate
             || (format.Length == 1 && (format[0] == 'g' || format[0] == 'G'))
             ? ToDateTime().ToString("d")
             : ToDateTime().ToString(format, formatProvider);
+
+        #if NDATE_CONTRACTS
+        [Pure]
+        #endif
+        public string ToIso8601String() => ToString("yyyy-MM-dd", DateTimeFormatInfo.InvariantInfo);
 
         public int CompareTo(object obj)
         {
