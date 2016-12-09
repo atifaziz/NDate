@@ -46,7 +46,7 @@ namespace NDate
 
         Date(int days)
         {
-            if (days < 0 || days > MaxDays) throw new ArgumentOutOfRangeException();
+            if (days < 0 || days > MaxDays) throw new ArgumentOutOfRangeException(nameof(days));
             _days = days;
         }
 
