@@ -23,5 +23,5 @@ if not exist "%DOTNETEXE%" (
 goto :EOF
 
 :build
-"%DOTNETEXE%" build -c %1 NDate
+call msbuild /v:m /p:Configuration=%1
 goto :EOF
