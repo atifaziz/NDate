@@ -8,6 +8,7 @@ goto :EOF
 setlocal
 set VERSION_SUFFIX=
 if not "%~1"=="" set VERSION_SUFFIX=/p:VersionSuffix=%1
+call build && ^
 call msbuild /v:m /t:Pack /p:Configuration=Release       ^
                           /p:IncludeSymbols=true         ^
                           /p:IncludeSource=true          ^
