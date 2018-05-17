@@ -67,7 +67,7 @@ namespace NDate
         public DayOfWeek DayOfWeek => ToDateTime().DayOfWeek;
 
         public override int GetHashCode() => _days;
-        public override bool Equals(object obj) => obj is Date && Equals((Date) obj);
+        public override bool Equals(object obj) => obj is Date date && Equals(date);
         public bool Equals(Date other) => _days == other._days;
 
         public override string ToString() => ToString((string) null);
