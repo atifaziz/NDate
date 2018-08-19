@@ -44,11 +44,13 @@ namespace NDate
         public Date(Date date) : this(date._days) { }
         public Date(int year, int month, int day) : this(new DateTime(year, month, day)) { }
 
-        Date(int days)
+        public Date(int days)
         {
             if (days < 0 || days > MaxDays) throw new ArgumentOutOfRangeException(nameof(days));
             _days = days;
         }
+            
+        public int TotalDays => _days;
 
         public static Date Today => new Date(DateTime.Today);
 
